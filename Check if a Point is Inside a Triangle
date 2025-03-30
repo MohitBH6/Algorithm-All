@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+struct Point {
+    int x, y;
+};
+
+int orientation(Point a, Point b, Point c) {
+    int val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
+    return (val > 0) ? 1 : (val < 0) ? -1 : 0;
+}
+
+bool isInside(Point a, Point b, Point c, Point p) {
+    int o1 = orientation(a, b, p);
+    int o2 = orientation(b, c, p);
+    int o3 = orientation(c, a, p);
+
+    return (o1 == o2 && o2 == o3);
+}
+
+int main() {
+    Point a = {0, 0}, b = {5, 0}, c = {2, 4}, p = {2, 2};
+
+    if (isInside(a, b, c, p))
+        cout << "Point is inside the triangle.\n";
+    else
+        cout << "Point is outside the triangle.\n";
+
+    return 0;
+}

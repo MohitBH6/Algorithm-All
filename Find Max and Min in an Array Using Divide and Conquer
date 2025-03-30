@@ -1,0 +1,31 @@
+#include <iostream>
+#include <climits>
+using namespace std;
+
+pair<int, int> findMaxMin(int arr[], int left, int right) {
+    if (left == right) {
+        return {arr[left], arr[left]};
+    }
+    if (right == left + 1) {
+        return (arr[left] > arr[right]) ? make_pair(arr[left], arr[right]) : make_pair(arr[right], arr[left]);
+    }
+
+    int mid = (left + right) / 2;
+    pair<int, int> leftResult = findMaxMin(arr, left, mid);
+    pair<int, int> rightResult = findMaxMin(arr, mid + 1, right);
+
+    int maxVal = max(leftResult.first, rightResult.first);
+    int minVal = min(leftResult.second, rightResult.second);
+
+    return {maxVal, minVal};
+}
+
+int main() {
+    int arr[] = {5, 2, 9, 1, 7, 6, 3};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    pair<int, int> result = findMaxMin(arr, 0, n - 1);
+    cout << "Max: " << result.first << ", Min: " << result.second << endl;
+
+    return 0;
+}
